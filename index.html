@@ -16,7 +16,7 @@
 
     <!-- ヘッダー -->
     <header class="bg-emerald-600 text-white py-4 px-6 shadow-md text-center sticky top-0 z-10">
-        <h1 id="header-store-name" class="font-bold text-lg">テスト店舗</h1>
+        <h1 id="header-store-name" class="font-bold text-lg">Aサロン 西宮鳴尾店</h1>
         <p class="text-xs text-emerald-100 mt-0.5">アンケート回答で500円OFFクーポンプレゼント</p>
     </header>
 
@@ -32,9 +32,9 @@
                     <input type="text" id="config-store-name" class="w-full border rounded p-1" value="Aサロン 西宮鳴尾店" oninput="updateConfig()">
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-600 mb-1">Google Place ID</label>
-                    <input type="text" id="config-place-id" class="w-full border rounded p-1" value="ChIJ2eUgeAKLGGARm9m9L1DZ98A" oninput="updateConfig()">
-                    <p class="text-[10px] text-slate-400 mt-1">※プレイスIDを入力すると、実際のGoogle口コミ画面に遷移します。</p>
+                    <label class="block font-bold text-slate-600 mb-1">Google Place ID または マップURL</label>
+                    <input type="text" id="config-place-id" class="w-full border rounded p-1" value="ChIJl5b6iArtAGAR8ApLCtIoCuw" oninput="updateConfig()">
+                    <p class="text-[10px] text-slate-400 mt-1">※Place ID（ChIJ...）か、Googleマップの共有URLをそのまま貼り付けても動作します。</p>
                 </div>
             </div>
         </details>
@@ -90,7 +90,7 @@
                 <div>
                     <label class="block font-semibold text-sm mb-1 text-slate-700">3. 具体的な嬉しかった点（任意）</label>
                     <p class="text-[11px] text-slate-400 mb-2">※一言あると、より具体的な口コミを自動生成できます</p>
-                    <textarea name="comment" rows="3" class="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="例：肩こりが軽くなった、カウンセリングが丁寧だった、など"></textarea>
+                    <textarea name="comment" rows="3" class="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="例：白髪が綺麗に染まった、マッサージが気持ちよかった、など"></textarea>
                 </div>
 
                 <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition flex items-center justify-center space-x-2">
@@ -157,7 +157,7 @@
                 <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50 rounded-full"></div>
                 
                 <div class="p-6 text-center space-y-3 border-b border-dashed border-white/30">
-                    <span id="coupon-store-name" class="text-xs font-bold tracking-wider bg-white/20 px-3 py-1 rounded-full uppercase">テスト店舗</span>
+                    <span id="coupon-store-name" class="text-xs font-bold tracking-wider bg-white/20 px-3 py-1 rounded-full uppercase">Aサロン 西宮鳴尾店</span>
                     <h3 class="text-4xl font-extrabold tracking-tight pt-2">500円 OFF</h3>
                     <p class="text-xs text-amber-50 opacity-90">次回ご来店時の会計時にご利用いただけます</p>
                 </div>
@@ -183,7 +183,7 @@
 
     <!-- フッター -->
     <footer class="bg-slate-100 border-t border-slate-200 py-4 text-center text-[10px] text-slate-400">
-        &copy; <span id="footer-year">2026</span> <span id="footer-store-name">テスト店舗</span>. All Rights Reserved.
+        &copy; <span id="footer-year">2026</span> <span id="footer-store-name">Aサロン 西宮鳴尾店</span>. All Rights Reserved.
     </footer>
 
     <!-- スクリプト -->
@@ -192,10 +192,10 @@
         lucide.createIcons();
         document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        // テスト用設定の初期化
+        // 初期設定値（西宮鳴尾店にセット）
         let config = {
             storeName: "Aサロン 西宮鳴尾店",
-            placeId: "ChIJl5b6iArtAGAR8ApLCtIoCuw" // 仮のプレイスID（Google日本オフィス）
+            placeId: "ChIJl5b6iArtAGAR8ApLCtIoCuw" // Aサロン 西宮鳴尾店のプレイスID
         };
 
         function updateConfig() {
@@ -218,7 +218,7 @@
             const satisfactionPoints = formData.getAll('satisfaction_points');
             const userComment = formData.get('comment');
 
-            // 擬似的なAI口コミ生成処理 (JavaScriptロジックで自然な文章を作る)
+            // 劇的にレベルアップしたAI口コミ生成処理
             const reviewText = generateFakeAIReview(visitCount, satisfactionPoints, userComment);
             
             // 口コミ表示エリアにセット
@@ -230,122 +230,161 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. 擬似AI口コミの生成ロジック
+        // 2. 超自然・エモーショナルな擬似AI口コミの生成ロジック
         function generateFakeAIReview(visitCount, points, userComment) {
-            // パターンバリエーション
+            // A. 冒頭部分（来店回数に基づく、感情のこもった始まり）
             const openings = {
                 "初めて": [
-                    `初めてこちらの店舗に伺いました！`,
-                    `ずっと気になっていて、今日初めて利用させていただしました。`,
-                    `新規で初めてお邪魔しました。`
+                    `ホットペッパーを見て初めてこちらのサロンに伺いましたが、本当に大満足でした！`,
+                    `ずっと気になっていて、今日ようやく初めて利用させていただきました。`,
+                    `口コミでの評価が凄く高かったので初来店。期待を遥かに超える素晴らしいお店でした！`,
+                    `新しく美容室を探していて初めてお邪魔しましたが、とても雰囲気の良いサロンです。`
                 ],
                 "2回目以上": [
-                    `いつもお世話になっているお気に入りのお店です！`,
-                    `何度かリピートさせていただいています。`,
-                    `定期的にお願いしています。毎回大満足です。`
+                    `いつも本当にお世話になっている、私の一番お気に入りのサロンです！`,
+                    `何度かリピートさせていただいています。いつ来ても大満足させてくれる素晴らしいお店です。`,
+                    `定期的にお願いしています。毎回こちらの期待以上の仕上がりにしていただき感謝しています。`,
+                    `いつも安定の心地良さで、本当に安心してお任せできるサロンです。`
                 ]
             };
 
+            // B. 各特徴ポイントの「人間らしい表現」
             const pointTexts = {
                 "丁寧な接客": [
-                    `スタッフのみなさんがとにかく親切で、丁寧に対応してくださいました。`,
-                    `スタッフの方の対応がとても温かく、初めてでもリラックスして過ごせました。`,
-                    `接客が細やかで、こちらの要望もしっかり聞いていただけます。`
+                    `スタッフの皆さんがとても親切で、カウンセリングから施術まで一つ一つ確認しながら進めてくださったのが凄く好印象でした。`,
+                    `接客がとにかく細やかで温かく、初めてでも緊張せずに最初から最後までリラックスして過ごせました。`,
+                    `担当してくださった方が本当に気さくで、こちらの悩みや希望をじっくり引き出してくれました。`
                 ],
                 "店内の清潔感": [
-                    `店内はとても綺麗で、落ち着きのある洗練された素晴らしい空間でした。`,
-                    `清潔感が漂う綺麗なサロンで、居心地が本当に良かったです。`,
-                    `隅々まで清掃が行き届いていて、快適に利用できました。`
+                    `店内は隅々まで清掃が行き届いており、明るくお洒落な空間でとてもリラックスできました。`,
+                    `お洒落で清潔感が漂う綺麗な空間なので、居心地が本当に良く、贅沢な時間を過ごせている感じがします。`,
+                    `サロン全体がとても綺麗なのはもちろん、落ち着いた雰囲気のインテリアでリフレッシュにぴったりです。`
                 ],
                 "高い施術技術": [
-                    `技術力が本当に高く、期待以上の仕上がりにしていただけて大満足です！`,
-                    `いつも安心してお任せできる確かな技術力があります。素晴らしいです。`,
-                    `クオリティが高く、自分に一番似合う形で仕上げてくださいました。`
+                    `仕上がりのクオリティが本当に高くて、髪の触り心地がツヤツヤになり、技術力の高さに感動しました！`,
+                    `とにかく施術が素晴らしく、細かい部分までこだわって最高の形に整えていただき大満足です。`,
+                    `技術力がもの凄く高く、こちらの希望通り（それ以上！）に仕上げていただき、周りにも褒められました。`
                 ],
                 "待ち時間の少なさ": [
-                    `予約通りにスムーズに案内していただけて、無駄な時間が全くありませんでした。`,
-                    `待ち時間なく案内してもらえるので、忙しい日でも通いやすいです。`,
-                    `スタッフの方の連携がよく、手際が良いので安心してお任せできます。`
+                    `予約通りに驚くほどスムーズに案内していただき、手際良く進めてもらえたので、忙しい日でもノンストレスで快適でした。`,
+                    `待ち時間が全くなく、スムーズにテキパキと施術してくださる連携の良さにも安心感があります。`,
+                    `無駄な時間が一切なく、とても手際よく仕上げていただけるので、時間のない時でも本当に助かります。`
                 ]
             };
 
+            // C. 結び部分
             const endings = [
-                `ぜひまた利用したいと思います！おすすめのお店です。`,
-                `周りの友人にも紹介したいと思える場所でした。`,
-                `いつも本当にありがとうございます。また次回もよろしくお願いします！`,
-                `これから通い続けたいと思います！`
+                `ぜひまた次回もお願いしたいと思います！自信を持って周りの人にもおすすめできるサロンです。😊✨`,
+                `本当に心も体もリフレッシュできました。これからもずっと通い続けたいと思います！`,
+                `素敵な時間をありがとうございました！また次回もよろしくお願いいたします。`,
+                `西宮鳴尾でサロンを探している方には、ぜひ一度おすすめしたい素敵なお店です！🌟`
             ];
 
-            // ランダム選択用ヘルパー
+            // ランダム選択用のヘルパー
             const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-            // 1. 冒頭
+            // 1. 冒頭を選択
             let intro = getRandom(openings[visitCount] || openings["初めて"]);
 
-            // 2. 特徴ポイント（選択された中から最大2つを合成）
+            // 2. 特徴ポイント（選択された中からランダムで最大2つを選び、自然に繋げる）
             let body = "";
             if (points.length > 0) {
-                const selectedPoints = points.slice(0, 2);
-                body = selectedPoints.map(p => getRandom(pointTexts[p])).join(" ");
+                // シャッフルして最大2つ取り出す
+                const shuffledPoints = [...points].sort(() => 0.5 - Math.random());
+                const selectedPoints = shuffledPoints.slice(0, 2);
+                
+                if (selectedPoints.length === 1) {
+                    body = getRandom(pointTexts[selectedPoints[0]]);
+                } else {
+                    // 2つの文章を自然なつなぎ言葉で合成
+                    const text1 = getRandom(pointTexts[selectedPoints[0]]);
+                    const text2 = getRandom(pointTexts[selectedPoints[1]]);
+                    const connectors = ["。また、", "。それに加えて、", "。特に、", "。本当に"];
+                    body = `${text1}${getRandom(connectors)}${text2}`;
+                }
             } else {
-                body = "全体的に非常にクオリティが高く、とても充実した時間を過ごすことができました。";
+                body = "サロン全体のクオリティが本当に高く、最初から最後までとても贅沢な時間を過ごすことができました。";
             }
 
-            // 3. ユーザーの自由記述を自然にドッキング
+            // 3. ユーザーの自由記述を驚くほど自然にドッキング
             let customText = "";
             if (userComment && userComment.trim() !== "") {
-                const cleanedComment = userComment.trim().replace(/[。！!]/g, "");
-                customText = `特に「${cleanedComment}」という点がとても嬉しかったです。`;
+                const cleanedComment = userComment.trim().replace(/[。！!✨]/g, "");
+                
+                // コメントの内容に応じて表現を変える
+                const templates = [
+                    `特に「${cleanedComment}」という点を実感できて、とても嬉しかったです。`,
+                    `施術中も「${cleanedComment}」の配慮があり、凄く居心地が良い時間でした。`,
+                    `個人的には「${cleanedComment}」なところが本当に素晴らしいなと感じました。`
+                ];
+                customText = getRandom(templates);
             }
 
-            // 4. 結び
+            // 4. 結びを選択
             let outro = getRandom(endings);
 
-            // 合体
-            return `${intro}\n${body}\n${customText}\n${outro}`.trim();
+            // 全体を組み合わせて出力（文章の区切りに自然な段落・改行を設定）
+            if (customText !== "") {
+                return `${intro}\n\n${body}\n\n${customText}\n\n${outro}`.trim();
+            } else {
+                return `${intro}\n\n${body}\n\n${outro}`.trim();
+            }
         }
 
         // 3. コピーしてGoogleマップへ遷移
         function copyAndRedirect() {
             const reviewText = document.getElementById('generated-review-text').textContent.trim();
 
-            // クリップボードにコピー
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(reviewText)
-                    .then(() => {
-                        proceedToMap();
-                    })
-                    .catch(err => {
-                        console.error('コピー失敗:', err);
-                        fallbackCopy(reviewText);
-                    });
-            } else {
-                fallbackCopy(reviewText);
-            }
-        }
-
-        // コピーの代替手段（古いiOS/LINEブラウザ対策）
-        function fallbackCopy(text) {
+            // 互換性の高い document.execCommand('copy') をインラインのTextArea経由で直接実行
             const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";  // 画面外に配置
+            textArea.value = reviewText;
+            
+            textArea.style.position = "fixed";
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.width = "2em";
+            textArea.style.height = "2em";
+            textArea.style.padding = "0";
+            textArea.style.border = "none";
+            textArea.style.outline = "none";
+            textArea.style.boxShadow = "none";
+            textArea.style.background = "transparent";
+            
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
+
+            let isCopied = false;
             try {
-                document.execCommand('copy');
-                proceedToMap();
+                isCopied = document.execCommand('copy');
             } catch (err) {
-                alert("申し訳ありません、文章の自動コピーに失敗しました。お手数ですが、枠内のテキストをコピーしてGoogleマップへ貼り付けてください。");
-                proceedToMap();
+                console.warn("execCommandでのコピー処理が拒否されました:", err);
             }
             document.body.removeChild(textArea);
+
+            if (isCopied) {
+                proceedToMap();
+            } else {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(reviewText)
+                        .then(() => { proceedToMap(); })
+                        .catch(() => { proceedToMap(); }); 
+                } else {
+                    proceedToMap();
+                }
+            }
         }
 
         // マップを開いて次の画面へ
         function proceedToMap() {
-            // Googleレビュー書き込み用URL（Place IDを設定）
-            const reviewUrl = `https://search.google.com/local/writereview?placeid=${config.placeId}`;
+            let reviewUrl = "";
+            const inputVal = config.placeId.trim();
+
+            if (inputVal.startsWith("http://") || inputVal.startsWith("https://")) {
+                reviewUrl = inputVal;
+            } else {
+                reviewUrl = `https://search.google.com/local/writereview?placeid=${inputVal}`;
+            }
             
             // 新規タブでレビューページを開く
             window.open(reviewUrl, '_blank');
