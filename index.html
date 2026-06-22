@@ -23,18 +23,47 @@
     <!-- メインコンテンツ -->
     <main class="flex-grow p-4 max-w-md mx-auto w-full">
 
-        <!-- 【設定パネル】テスト用にプレイスIDや店舗名を変えられるようにする（本番時は非表示にできます） -->
+        <!-- 【設定パネル】テスト用にプレイスIDやGemini APIキーを設定可能 -->
         <details class="mb-4 bg-white rounded-xl shadow-sm border border-slate-200 p-3 text-xs">
-            <summary class="font-semibold text-slate-500 cursor-pointer focus:outline-none">🛠️ テスト設定（ここをクリックして編集）</summary>
-            <div class="mt-3 space-y-2 pt-2 border-t border-slate-100">
+            <summary class="font-semibold text-slate-500 cursor-pointer focus:outline-none flex items-center justify-between">
+                <span>🛠️ 事業化・AIテスト設定（詳細はこちら）</span>
+                <span class="text-emerald-600 font-bold">編集可</span>
+            </summary>
+            <div class="mt-3 space-y-3 pt-2 border-t border-slate-100">
                 <div>
-                    <label class="block font-bold text-slate-600 mb-1">店舗名</label>
-                    <input type="text" id="config-store-name" class="w-full border rounded p-1" value="Aサロン 西宮鳴尾店" oninput="updateConfig()">
+                    <label class="block font-bold text-slate-600 mb-1">① 店舗名</label>
+                    <input type="text" id="config-store-name" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-emerald-500" value="Aサロン 西宮鳴尾店" oninput="updateConfig()">
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-600 mb-1">Google Place ID または マップURL</label>
-                    <input type="text" id="config-place-id" class="w-full border rounded p-1" value="ChIJl5b6iArtAGAR8ApLCtIoCuw" oninput="updateConfig()">
-                    <p class="text-[10px] text-slate-400 mt-1">※Place ID（ChIJ...）か、Googleマップの共有URLをそのまま貼り付けても動作します。</p>
+                    <label class="block font-bold text-slate-600 mb-1">② Google Place ID</label>
+                    <input type="text" id="config-place-id" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-emerald-500" value="ChIJl5b6iArtAGAR8ApLCtIoCuw" oninput="updateConfig()">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-600 mb-1 flex items-center text-emerald-700">
+                        <i data-lucide="trending-up" class="w-3.5 h-3.5 mr-1"></i>
+                        ③ MEO対策 ターゲットキーワード（カンマ区切り）
+                    </label>
+                    <input type="text" id="config-seo-keywords" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-emerald-500 font-medium" value="西宮鳴尾 美容室, 白髪染め, ヘッドスパ" oninput="updateConfig()">
+                    <p class="text-[10px] text-slate-400 mt-1">※AIが自然な文章内にこのキーワードを自動で埋め込みます！</p>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-600 mb-1">④ 口コミの雰囲気・文体</label>
+                    <select id="config-style" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-emerald-500" onchange="updateConfig()">
+                        <option value="friendly">カジュアル（絵文字入りで親しみやすい）</option>
+                        <option value="polite">丁寧・フォーマル（落ち着いた大人のトーン）</option>
+                    </select>
+                </div>
+                
+                <div class="bg-amber-50 p-2.5 rounded-lg border border-amber-200 mt-2 space-y-2">
+                    <span class="font-bold text-amber-800 block text-[10px]">✨ 本物のAI「Gemini」連携テスト（無料）</span>
+                    <div>
+                        <label class="block font-bold text-slate-600 mb-1">Gemini API Key</label>
+                        <input type="password" id="config-gemini-key" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-amber-500 bg-white" placeholder="AI Studioで取得したキーを貼り付け" oninput="updateConfig()">
+                        <p class="text-[9px] text-slate-500 mt-1 leading-relaxed">
+                            ※APIキーを入れると「本物のAI」が稼働します。キーはあなたのブラウザ（LocalStorage）にのみ安全に保存され、GitHub等の外部に漏れることはありません。<br>
+                            <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-emerald-600 underline font-semibold">👉 Google AI StudioからAPIキーを無料で取得する（1分）</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </details>
@@ -90,7 +119,7 @@
                 <div>
                     <label class="block font-semibold text-sm mb-1 text-slate-700">3. 具体的な嬉しかった点（任意）</label>
                     <p class="text-[11px] text-slate-400 mb-2">※一言あると、より具体的な口コミを自動生成できます</p>
-                    <textarea name="comment" rows="3" class="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="例：白髪が綺麗に染まった、マッサージが気持ちよかった、など"></textarea>
+                    <textarea name="comment" rows="3" class="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="例：白髪染めが綺麗に染まった、ヘッドスパが気持ちよかった、など"></textarea>
                 </div>
 
                 <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition flex items-center justify-center space-x-2">
@@ -100,6 +129,23 @@
             </form>
         </div>
 
+        <!-- AI読み込みアニメーション（本物のAPI利用時に表示） -->
+        <div id="step-loading" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-8 text-center space-y-6">
+            <div class="flex justify-center">
+                <div class="relative w-20 h-20">
+                    <div class="absolute inset-0 border-4 border-emerald-100 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-emerald-600 rounded-full animate-spin border-t-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-emerald-600 animate-pulse"></i>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg text-slate-800">Gemini AIが口コミ文を執筆中...</h3>
+                <p class="text-xs text-slate-400 mt-1">アンケート結果とMEOワードを分析して文章を作っています</p>
+            </div>
+        </div>
+
         <!-- ステップ2: AI口コミ生成 ➔ コピー ➔ Googleマップ動線 -->
         <div id="step-ai-review" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-6">
             <div class="text-center">
@@ -107,12 +153,15 @@
                     <i data-lucide="sparkles" class="w-8 h-8 animate-pulse"></i>
                 </div>
                 <h2 class="text-xl font-bold">AIが口コミを生成しました！</h2>
-                <p class="text-xs text-slate-500 mt-1">アンケートから作成した自然なレビュー文章です</p>
+                <div class="flex items-center justify-center space-x-1.5 mt-1 text-emerald-600 font-bold text-xs bg-emerald-50 py-1 px-3 rounded-full w-fit mx-auto">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>MEO対策キーワード自動最適化済</span>
+                </div>
             </div>
 
             <div class="bg-slate-50 rounded-xl p-4 border border-dashed border-slate-200 relative">
                 <span class="absolute -top-2.5 left-4 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">AI生成下書き</span>
-                <p id="generated-review-text" class="text-sm leading-relaxed text-slate-700 pt-1">
+                <p id="generated-review-text" class="text-sm leading-relaxed text-slate-700 pt-1 whitespace-pre-wrap">
                     （ここに口コミが生成されます）
                 </p>
             </div>
@@ -157,7 +206,7 @@
                 <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50 rounded-full"></div>
                 
                 <div class="p-6 text-center space-y-3 border-b border-dashed border-white/30">
-                    <span id="coupon-store-name" class="text-xs font-bold tracking-wider bg-white/20 px-3 py-1 rounded-full uppercase">Aサロン 西宮鳴尾店</span>
+                    <span id="coupon-store-name" class="text-xs font-bold tracking-wider bg-white/20 px-3 py-1 rounded-full uppercase font-medium">Aサロン 西宮鳴尾店</span>
                     <h3 class="text-4xl font-extrabold tracking-tight pt-2">500円 OFF</h3>
                     <p class="text-xs text-amber-50 opacity-90">次回ご来店時の会計時にご利用いただけます</p>
                 </div>
@@ -192,15 +241,31 @@
         lucide.createIcons();
         document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        // 初期設定値（西宮鳴尾店にセット）
+        // 初期設定値（ローカルストレージからAPIキーを復元）
         let config = {
             storeName: "Aサロン 西宮鳴尾店",
-            placeId: "ChIJl5b6iArtAGAR8ApLCtIoCuw" // Aサロン 西宮鳴尾店のプレイスID
+            placeId: "ChIJl5b6iArtAGAR8ApLCtIoCuw",
+            seoKeywords: "西宮鳴尾 美容室, 白髪染め, ヘッドスパ",
+            style: "friendly",
+            geminiKey: localStorage.getItem("gemini_api_key") || ""
         };
+
+        // UI初期化時に設定値を流し込む
+        document.getElementById('config-store-name').value = config.storeName;
+        document.getElementById('config-place-id').value = config.placeId;
+        document.getElementById('config-seo-keywords').value = config.seoKeywords;
+        document.getElementById('config-style').value = config.style;
+        document.getElementById('config-gemini-key').value = config.geminiKey;
 
         function updateConfig() {
             config.storeName = document.getElementById('config-store-name').value;
             config.placeId = document.getElementById('config-place-id').value;
+            config.seoKeywords = document.getElementById('config-seo-keywords').value;
+            config.style = document.getElementById('config-style').value;
+            config.geminiKey = document.getElementById('config-gemini-key').value;
+
+            // APIキーをローカルストレージに安全に保管
+            localStorage.setItem("gemini_api_key", config.geminiKey);
 
             // 各種テキスト書き換え
             document.getElementById('header-store-name').textContent = config.storeName;
@@ -210,7 +275,7 @@
         updateConfig();
 
         // 1. アンケート回答送信
-        function handleSurveySubmit(event) {
+        async function handleSurveySubmit(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
             
@@ -218,112 +283,218 @@
             const satisfactionPoints = formData.getAll('satisfaction_points');
             const userComment = formData.get('comment');
 
-            // 劇的にレベルアップしたAI口コミ生成処理
-            const reviewText = generateFakeAIReview(visitCount, satisfactionPoints, userComment);
+            let reviewText = "";
+
+            // Gemini APIキーが設定されている場合は、本物のAIを呼び出す
+            if (config.geminiKey.trim() !== "") {
+                // ローディング表示に切り替え
+                document.getElementById('step-form').classList.add('hidden');
+                document.getElementById('step-loading').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                try {
+                    reviewText = await callGeminiAI(visitCount, satisfactionPoints, userComment);
+                } catch (error) {
+                    console.error("Gemini API連携エラー、疑似生成にフォールバックします:", error);
+                    // エラー時は疑似生成エンジンを呼び出して動きを保証する
+                    reviewText = generateFakeAIReview(visitCount, satisfactionPoints, userComment);
+                }
+
+                document.getElementById('step-loading').classList.add('hidden');
+            } else {
+                // APIキーが無い場合は、高速な疑似AI生成エンジンで対応
+                reviewText = generateFakeAIReview(visitCount, satisfactionPoints, userComment);
+                document.getElementById('step-form').classList.add('hidden');
+            }
             
             // 口コミ表示エリアにセット
             document.getElementById('generated-review-text').textContent = reviewText;
-
-            // 画面遷移
-            document.getElementById('step-form').classList.add('hidden');
             document.getElementById('step-ai-review').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 2. 超自然・エモーショナルな擬似AI口コミの生成ロジック
-        function generateFakeAIReview(visitCount, points, userComment) {
-            // A. 冒頭部分（来店回数に基づく、感情のこもった始まり）
-            const openings = {
-                "初めて": [
-                    `ホットペッパーを見て初めてこちらのサロンに伺いましたが、本当に大満足でした！`,
-                    `ずっと気になっていて、今日ようやく初めて利用させていただきました。`,
-                    `口コミでの評価が凄く高かったので初来店。期待を遥かに超える素晴らしいお店でした！`,
-                    `新しく美容室を探していて初めてお邪魔しましたが、とても雰囲気の良いサロンです。`
-                ],
-                "2回目以上": [
-                    `いつも本当にお世話になっている、私の一番お気に入りのサロンです！`,
-                    `何度かリピートさせていただいています。いつ来ても大満足させてくれる素晴らしいお店です。`,
-                    `定期的にお願いしています。毎回こちらの期待以上の仕上がりにしていただき感謝しています。`,
-                    `いつも安定の心地良さで、本当に安心してお任せできるサロンです。`
-                ]
-            };
+        // 2-A. 本物のGoogle Gemini APIを呼び出す関数
+        async function callGeminiAI(visitCount, points, userComment) {
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${config.geminiKey}`;
+            
+            const politePrompt = "落ち着きがあり丁寧でフォーマルな大人っぽい日本語のトーン（〜です、〜でした）";
+            const friendlyPrompt = "20〜30代女性が書いたような、適度に絵文字を散りばめたフランクで温かみのある日本語トーン（〜でした！✨、〜です😊）";
+            const selectedTone = config.style === "friendly" ? friendlyPrompt : politePrompt;
 
-            // B. 各特徴ポイントの「人間らしい表現」
-            const pointTexts = {
-                "丁寧な接客": [
-                    `スタッフの皆さんがとても親切で、カウンセリングから施術まで一つ一つ確認しながら進めてくださったのが凄く好印象でした。`,
-                    `接客がとにかく細やかで温かく、初めてでも緊張せずに最初から最後までリラックスして過ごせました。`,
-                    `担当してくださった方が本当に気さくで、こちらの悩みや希望をじっくり引き出してくれました。`
-                ],
-                "店内の清潔感": [
-                    `店内は隅々まで清掃が行き届いており、明るくお洒落な空間でとてもリラックスできました。`,
-                    `お洒落で清潔感が漂う綺麗な空間なので、居心地が本当に良く、贅沢な時間を過ごせている感じがします。`,
-                    `サロン全体がとても綺麗なのはもちろん、落ち着いた雰囲気のインテリアでリフレッシュにぴったりです。`
-                ],
-                "高い施術技術": [
-                    `仕上がりのクオリティが本当に高くて、髪の触り心地がツヤツヤになり、技術力の高さに感動しました！`,
-                    `とにかく施術が素晴らしく、細かい部分までこだわって最高の形に整えていただき大満足です。`,
-                    `技術力がもの凄く高く、こちらの希望通り（それ以上！）に仕上げていただき、周りにも褒められました。`
-                ],
-                "待ち時間の少なさ": [
-                    `予約通りに驚くほどスムーズに案内していただき、手際良く進めてもらえたので、忙しい日でもノンストレスで快適でした。`,
-                    `待ち時間が全くなく、スムーズにテキパキと施術してくださる連携の良さにも安心感があります。`,
-                    `無駄な時間が一切なく、とても手際よく仕上げていただけるので、時間のない時でも本当に助かります。`
-                ]
-            };
+            const promptText = `
+あなたは実在するお客様になりきって、Googleマップに高評価（星5）のクチコミを投稿するプロのライターです。
+提供されたお客様アンケート情報を基に、自然で説得力のある口コミ文章を1つ作成してください。
 
-            // C. 結び部分
-            const endings = [
-                `ぜひまた次回もお願いしたいと思います！自信を持って周りの人にもおすすめできるサロンです。😊✨`,
-                `本当に心も体もリフレッシュできました。これからもずっと通い続けたいと思います！`,
-                `素敵な時間をありがとうございました！また次回もよろしくお願いいたします。`,
-                `西宮鳴尾でサロンを探している方には、ぜひ一度おすすめしたい素敵なお店です！🌟`
-            ];
+# 制約事項:
+- AIが書いたと絶対にバレないよう、人間が実際に書いた自然な話し言葉で執筆してください。客観的な説明は避け、主観的な感想（「〜で感動しました！」「〜が本当に嬉しかったです」）で構成してください。
+- 以下の「MEO対策ターゲットキーワード」から、自然な文脈に溶け込ませる形で、1〜2個のキーワードを文章内に必ず散りばめてください。強引に詰め込むのではなく、あくまで全体の会話の流れが自然になるようにすること。
+- 見出し、タイトル、挨拶（「こんにちは」など）は絶対に出力せず、口コミの本文だけを出力してください。
+- 文字数は 120字〜180字 程度に収めてください。
 
-            // ランダム選択用のヘルパー
-            const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+# 出力文体:
+- ${selectedTone}
 
-            // 1. 冒頭を選択
-            let intro = getRandom(openings[visitCount] || openings["初めて"]);
+# アンケート情報:
+- 対象店舗名: ${config.storeName}
+- 来店回数: ${visitCount}
+- 今回特に満足した点: ${points.join('、')}
+- お客様の自由感想（もしあれば）: "${userComment || '特になし'}"
+- MEO対策ターゲットキーワード: ${config.seoKeywords}
 
-            // 2. 特徴ポイント（選択された中からランダムで最大2つを選び、自然に繋げる）
-            let body = "";
-            if (points.length > 0) {
-                // シャッフルして最大2つ取り出す
-                const shuffledPoints = [...points].sort(() => 0.5 - Math.random());
-                const selectedPoints = shuffledPoints.slice(0, 2);
-                
-                if (selectedPoints.length === 1) {
-                    body = getRandom(pointTexts[selectedPoints[0]]);
-                } else {
-                    // 2つの文章を自然なつなぎ言葉で合成
-                    const text1 = getRandom(pointTexts[selectedPoints[0]]);
-                    const text2 = getRandom(pointTexts[selectedPoints[1]]);
-                    const connectors = ["。また、", "。それに加えて、", "。特に、", "。本当に"];
-                    body = `${text1}${getRandom(connectors)}${text2}`;
-                }
-            } else {
-                body = "サロン全体のクオリティが本当に高く、最初から最後までとても贅沢な時間を過ごすことができました。";
+# 出力（口コミの本文のみ）:`;
+
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: promptText
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.75,
+                        maxOutputTokens: 300
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.error?.message || "Gemini APIエラー");
             }
 
-            // 3. ユーザーの自由記述を驚くほど自然にドッキング
+            const resData = await response.json();
+            const generatedText = resData.candidates[0].content.parts[0].text;
+            return generatedText.trim().replace(/^`+|`+$/g, ""); // マークダウン記号等があれば除去
+        }
+
+        // 2-B. 疑似AI口コミの生成ロジック（バックアップ）
+        function generateFakeAIReview(visitCount, points, userComment) {
+            const seoWords = config.seoKeywords.split(',').map(w => w.trim()).filter(w => w.length > 0);
+            const targetSeo1 = seoWords[0] || "美容室";
+            const targetSeo2 = seoWords[1] || "白髪染め";
+            const targetSeo3 = seoWords[2] || "ヘッドスパ";
+
+            const isFriendly = config.style === "friendly";
+
+            const openings = {
+                "friendly": {
+                    "初めて": [
+                        `${targetSeo1}を探していて、今回初めてこちらに伺いましたが大満足でした！✨`,
+                        `ずっと気になっていて、ようやく${targetSeo1}のこちらを初利用。凄く良かったです！😊`,
+                        `口コミが良かったので初来店。期待以上の素晴らしい${targetSeo1}でした！`
+                    ],
+                    "2回目以上": [
+                        `いつも定期的にお世話になっている、本当にお気に入りの${targetSeo1}です！✨`,
+                        `色々な${targetSeo1}に行きましたが、ここが安定して一番居心地が良いです。`,
+                        `何度かリピートさせていただいています。いつも大満足の仕上がりです！😊`
+                    ]
+                },
+                "polite": {
+                    "初めて": [
+                        `${targetSeo1}を探していたところ、評判が良かったため初めて伺いましたが非常に満足しております。`,
+                        `本日、こちらの${targetSeo1}を初めて利用させていただきました。非常に素晴らしい体験でした。`,
+                        `新しくサロンを探しており初来店いたしましたが、期待以上のクオリティでした。`
+                    ],
+                    "2回目以上": [
+                        `いつも定期的にお世話になっている、信頼のおける${targetSeo1}です。`,
+                        `何度かリピートさせていただいておりますが、毎回こちらの期待以上のサービスを提供していただけます。`,
+                        `いつも安定した心地良さで、安心して施術をお任せできるサロンです。`
+                    ]
+                }
+            };
+
+            const pointTexts = {
+                "friendly": {
+                    "丁寧な接客": [
+                        `スタッフの皆さんがとても親切で、カウンセリングから施術まで細かく確認しながら進めてくれたので安心感がありました。`,
+                        `接客がとにかく丁寧で温かく、初めてでも緊張せずに最初から最後までリラックスして過ごせました。`
+                    ],
+                    "店内の清潔感": [
+                        `店内は隅々まで清掃が行き届いていて、明るくお洒落な空間でとてもリフレッシュできました。🌿`,
+                        `お洒落で清潔感が漂うお部屋なので居心地が良く、贅沢な時間を過ごせている感じがします。`
+                    ],
+                    "高い施術技術": [
+                        `仕上がりのクオリティが本当に高くて、髪がツヤツヤになり大満足です！特に気になっていた${targetSeo2}が本当に綺麗な仕上がりで感動しました。`,
+                        `とにかく技術が素晴らしく、こちらの悩みだった髪質も${targetSeo2}で驚くほど綺麗にまとまりました！✨`
+                    ],
+                    "待ち時間の少なさ": [
+                        `予約通りに驚くほどスムーズに案内していただき、手際良く進めてもらえたので忙しい日でもノンストレスでした。`,
+                        `待ち時間が全くなく、スムーズにテキパキと施術してくださる連携の良さが素晴らしいです。`
+                    ]
+                },
+                "polite": {
+                    "丁寧な接客": [
+                        `スタッフの皆様が非常に親切で、カウンセリングから施術に至るまで逐一確認しながら進めてくださり、大変好感が持てました。`,
+                        `接客対応が非常に細やかで温かく、最初から最後まで心地よくリラックスして過ごすことができました。`
+                    ],
+                    "店内の清潔感": [
+                        `店内は隅々まで清掃が行き届いており、落ち着いた雰囲気の清潔な空間で非常にリラックスできました。`,
+                        `清潔感のある美しいサロンで居心地が非常に良く、贅沢で穏やかな時間を過ごすことができます。`
+                    ],
+                    "高い施術技術": [
+                        `施術技術が大変素晴らしく、仕上がりの良さに驚きました。今回は${targetSeo2}をお願いしましたが、驚くほどの艶感が出て大満足です。`,
+                        `確かな技術力があり、悩んでいた髪型も非常に綺麗に整えていただきました。特に${targetSeo2}の技術に感動いたしました。`
+                    ],
+                    "待ち時間の少なさ": [
+                        `予約通りに大変スムーズに案内していただき、手際良く進行していただけたため、終始ストレスなく快適でした。`,
+                        `無駄な待ち時間が一切なく、テキパキと進めてくださる効率の良さに大変感謝しております。`
+                    ]
+                }
+            };
+
+            const endings = {
+                "friendly": [
+                    `最後にしていただいた${targetSeo3}もめちゃくちゃ気持ちよくて、寝そうになりました。笑 また次回もお願いします！😊`,
+                    `仕上がりはもちろん、${targetSeo3}の心地よさも極上でした。これからも通い続けたいと思います！✨`,
+                    `大満足の時間でした！特に${targetSeo3}が心地よすぎたので、是非またお願いしたいです。ありがとうございました！`
+                ],
+                "polite": [
+                    `施術中の${targetSeo3}も大変心地よく、心身ともに深くリフレッシュさせていただきました。また次回も利用したいと思います。`,
+                    `技術・サービスともに素晴らしく、最後の${targetSeo3}も含めて贅沢な時間を過ごせました。自信を持って皆様におすすめできる店舗です。`,
+                    `非常に丁寧に対応していただき感謝しております。心地よい${targetSeo3}の体験も含め、次回も是非よろしくお願いいたします。`
+                ]
+            };
+
+            const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+            const styleKey = isFriendly ? "friendly" : "polite";
+
+            let intro = getRandom(openings[styleKey][visitCount] || openings[styleKey]["初めて"]);
+            let body = "";
+            let selectedPoints = [...points];
+            if (selectedPoints.includes("高い施術技術")) {
+                selectedPoints = ["高い施術技術", ...selectedPoints.filter(p => p !== "高い施術技術")];
+            }
+            const activePoints = selectedPoints.slice(0, 2);
+
+            if (activePoints.length > 0) {
+                if (activePoints.length === 1) {
+                    body = getRandom(pointTexts[styleKey][activePoints[0]]);
+                } else {
+                    const text1 = getRandom(pointTexts[styleKey][activePoints[0]]);
+                    const text2 = getRandom(pointTexts[styleKey][activePoints[1]]);
+                    const connector = isFriendly ? "。あと、" : "。また、";
+                    body = `${text1}${connector}${text2}`;
+                }
+            } else {
+                body = isFriendly ? 
+                    `全体的に凄くクオリティが高く、最初から最後までとても贅沢な時間を過ごせました。` :
+                    `全体的に非常にクオリティが高く、素晴らしい時間を過ごすことができました。`;
+            }
+
             let customText = "";
             if (userComment && userComment.trim() !== "") {
                 const cleanedComment = userComment.trim().replace(/[。！!✨]/g, "");
-                
-                // コメントの内容に応じて表現を変える
-                const templates = [
-                    `特に「${cleanedComment}」という点を実感できて、とても嬉しかったです。`,
-                    `施術中も「${cleanedComment}」の配慮があり、凄く居心地が良い時間でした。`,
-                    `個人的には「${cleanedComment}」なところが本当に素晴らしいなと感じました。`
-                ];
-                customText = getRandom(templates);
+                customText = isFriendly ? 
+                    `特に「${cleanedComment}」という点を実際に実感できて、めちゃくちゃ嬉しかったです！` :
+                    `特に「${cleanedComment}」という部分を実感することができ、非常に嬉しく思いました。`;
             }
 
-            // 4. 結びを選択
-            let outro = getRandom(endings);
+            let outro = getRandom(endings[styleKey]);
 
-            // 全体を組み合わせて出力（文章の区切りに自然な段落・改行を設定）
             if (customText !== "") {
                 return `${intro}\n\n${body}\n\n${customText}\n\n${outro}`.trim();
             } else {
@@ -335,7 +506,6 @@
         function copyAndRedirect() {
             const reviewText = document.getElementById('generated-review-text').textContent.trim();
 
-            // 互換性の高い document.execCommand('copy') をインラインのTextArea経由で直接実行
             const textArea = document.createElement("textarea");
             textArea.value = reviewText;
             
@@ -386,10 +556,8 @@
                 reviewUrl = `https://search.google.com/local/writereview?placeid=${inputVal}`;
             }
             
-            // 新規タブでレビューページを開く
             window.open(reviewUrl, '_blank');
 
-            // 1.5秒後に、LINE画面側を「クーポン取得完了」に切り替える
             setTimeout(() => {
                 document.getElementById('step-ai-review').classList.add('hidden');
                 document.getElementById('step-coupon').classList.remove('hidden');
@@ -423,7 +591,6 @@
             document.getElementById('step-coupon').classList.add('hidden');
             document.getElementById('step-form').classList.remove('hidden');
             
-            // クーポンアクションエリアを復元
             document.getElementById('coupon-action-area').innerHTML = `
                 <button onclick="useCoupon()" class="w-full bg-white text-orange-600 font-bold py-2.5 px-4 rounded-xl text-sm shadow hover:bg-amber-50 transition">
                     スタッフが確認して使用する
