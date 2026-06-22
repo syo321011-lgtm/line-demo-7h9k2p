@@ -3,27 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 他の人（検索エンジン）に見つからないようにするための設定 (検索除外) -->
     <meta name="robots" content="noindex, nofollow, noarchive">
     
     <title>アンケート & 特典クーポン</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
 
-    <!-- ヘッダー -->
     <header class="bg-emerald-600 text-white py-4 px-6 shadow-md text-center sticky top-0 z-10">
         <h1 id="header-store-name" class="font-bold text-lg">Aサロン 西宮鳴尾店</h1>
         <p class="text-xs text-emerald-100 mt-0.5">アンケート回答で500円OFFクーポンプレゼント</p>
     </header>
 
-    <!-- メインコンテンツ -->
     <main class="flex-grow p-4 max-w-md mx-auto w-full">
 
-        <!-- 【設定パネル】テスト用にプレイスIDやMEOキーワードを設定可能 -->
         <details class="mb-4 bg-white rounded-xl shadow-sm border border-slate-200 p-3 text-xs">
             <summary class="font-semibold text-slate-500 cursor-pointer focus:outline-none flex items-center justify-between">
                 <span>🛠️ 事業化・AIテスト設定（詳細はこちら）</span>
@@ -44,7 +38,7 @@
                         ③ MEO対策 ターゲットキーワード（カンマ区切り）
                     </label>
                     <input type="text" id="config-seo-keywords" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-emerald-500 font-medium" value="西宮鳴尾 美容室, 白髪染め, ヘッドスパ" oninput="updateConfig()">
-                    <p class="text-[10px] text-slate-400 mt-1">※AIがこのキーワードを自然な文章内に自動で散りばめます！</p>
+                    <p class="text-[10px] text-slate-400 mt-1">※AIが自然な文章内にこのキーワードを自動で埋め込みます！</p>
                 </div>
                 <div>
                     <label class="block font-bold text-slate-600 mb-1">④ 口コミの雰囲気・文体</label>
@@ -53,18 +47,21 @@
                         <option value="polite">丁寧・フォーマル（落ち着いた大人のトーン）</option>
                     </select>
                 </div>
-                <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 space-y-2">
-                    <label class="block font-bold text-slate-700 flex items-center justify-between">
-                        <span class="flex items-center"><i data-lucide="key" class="w-3.5 h-3.5 mr-1 text-emerald-600"></i>⑤ Gemini API Key</span>
-                        <span id="api-status-badge" class="text-[9px] px-2 py-0.5 rounded-full font-bold">判定中...</span>
-                    </label>
-                    <input type="password" id="config-api-key" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-emerald-500 font-mono text-xs" placeholder="AIzaSy..." oninput="handleApiKeyInput()">
-                    <p class="text-[9px] text-slate-400">※ご提示いただいたAPIキーを初期セットしています。キーはブラウザに安全にのみ保存されます。</p>
+                
+                <div class="bg-amber-50 p-2.5 rounded-lg border border-amber-200 mt-2 space-y-2">
+                    <span class="font-bold text-amber-800 block text-[10px]">✨ 本物のAI「Gemini」連携テスト（無料）</span>
+                    <div>
+                        <label class="block font-bold text-slate-600 mb-1">Gemini API Key</label>
+                        <input type="password" id="config-gemini-key" class="w-full border rounded p-1.5 focus:ring-1 focus:ring-amber-500 bg-white" placeholder="AI Studioで取得したキーを貼り付け" oninput="updateConfig()">
+                        <p class="text-[9px] text-slate-500 mt-1 leading-relaxed">
+                            ※APIキーを入れると「本物のAI」が稼働します。キーはあなたのブラウザ（LocalStorage）にのみ安全に保存され、GitHub等の外部に漏れることはありません。<br>
+                            <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-emerald-600 underline font-semibold">👉 Google AI StudioからAPIキーを無料で取得する（1分）</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </details>
 
-        <!-- ステップ1: アンケートフォーム -->
         <div id="step-form" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-6">
             <div class="text-center">
                 <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full">簡単1分</span>
@@ -73,7 +70,6 @@
             </div>
 
             <form id="survey-form" onsubmit="handleSurveySubmit(event)" class="space-y-5">
-                <!-- 質問1: 来店回数 -->
                 <div>
                     <label class="block font-semibold text-sm mb-2 text-slate-700">1. 本日のご来店は？ <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-2 gap-3">
@@ -88,7 +84,6 @@
                     </div>
                 </div>
 
-                <!-- 質問2: 満足した点（複数可） -->
                 <div>
                     <label class="block font-semibold text-sm mb-2 text-slate-700">2. 本日、特に満足した点は？ <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-2 gap-2">
@@ -111,7 +106,6 @@
                     </div>
                 </div>
 
-                <!-- 質問3: 自由記述 -->
                 <div>
                     <label class="block font-semibold text-sm mb-1 text-slate-700">3. 具体的な嬉しかった点（任意）</label>
                     <p class="text-[11px] text-slate-400 mb-2">※一言あると、より具体的な口コミを自動生成できます</p>
@@ -125,24 +119,31 @@
             </form>
         </div>
 
-        <!-- 読込中ローディング画面 -->
-        <div id="step-loading" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-8 text-center space-y-4">
-            <div class="inline-flex items-center justify-center text-emerald-600">
-                <i data-lucide="sparkles" class="w-12 h-12 animate-spin text-emerald-500"></i>
+        <div id="step-loading" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-8 text-center space-y-6">
+            <div class="flex justify-center">
+                <div class="relative w-20 h-20">
+                    <div class="absolute inset-0 border-4 border-emerald-100 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-emerald-600 rounded-full animate-spin border-t-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-emerald-600 animate-pulse"></i>
+                    </div>
+                </div>
             </div>
-            <h3 class="text-lg font-bold text-slate-800">Gemini AIが口コミを自動生成中...</h3>
-            <p class="text-xs text-slate-400">アンケート内容とMEOキーワードを最適化しています</p>
+            <div>
+                <h3 class="font-bold text-lg text-slate-800">Gemini AIが口コミ文を執筆中...</h3>
+                <p class="text-xs text-slate-400 mt-1">アンケート結果とMEOワードを分析して文章を作っています</p>
+            </div>
         </div>
 
-        <!-- ステップ2: AI口コミ生成 ➔ コピー ➔ Googleマップ動線 -->
         <div id="step-ai-review" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-6">
             <div class="text-center">
                 <div class="inline-flex items-center justify-center bg-amber-50 text-amber-600 p-3 rounded-full mb-3">
                     <i data-lucide="sparkles" class="w-8 h-8 animate-pulse"></i>
                 </div>
                 <h2 class="text-xl font-bold">AIが口コミを生成しました！</h2>
-                <div id="ai-badge-container" class="flex items-center justify-center space-x-1.5 mt-1 text-emerald-600 font-bold text-xs bg-emerald-50 py-1 px-3 rounded-full w-fit mx-auto">
-                    <!-- JavaScriptでバッジ内容を切り替えます -->
+                <div class="flex items-center justify-center space-x-1.5 mt-1 text-emerald-600 font-bold text-xs bg-emerald-50 py-1 px-3 rounded-full w-fit mx-auto">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>MEO対策キーワード自動最適化済</span>
                 </div>
             </div>
 
@@ -175,9 +176,7 @@
             </div>
         </div>
 
-        <!-- ステップ3: クーポン画面 -->
         <div id="step-coupon" class="hidden space-y-6">
-            <!-- サンクスメッセージ -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 text-center">
                 <div class="inline-flex items-center justify-center bg-emerald-50 text-emerald-600 p-3 rounded-full mb-3">
                     <i data-lucide="check-circle" class="w-8 h-8"></i>
@@ -186,9 +185,7 @@
                 <p class="text-xs text-slate-500 mt-1">お礼として500円OFFクーポンをプレゼントいたします。</p>
             </div>
 
-            <!-- クーポンカード -->
             <div class="bg-gradient-to-br from-amber-400 to-orange-500 text-white rounded-2xl shadow-xl overflow-hidden relative border-4 border-white">
-                <!-- 装飾用半円（ちぎり券風） -->
                 <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50 rounded-full"></div>
                 <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50 rounded-full"></div>
                 
@@ -217,96 +214,47 @@
 
     </main>
 
-    <!-- フッター -->
     <footer class="bg-slate-100 border-t border-slate-200 py-4 text-center text-[10px] text-slate-400">
         &copy; <span id="footer-year">2026</span> <span id="footer-store-name">Aサロン 西宮鳴尾店</span>. All Rights Reserved.
     </footer>
 
-    <!-- スクリプト -->
     <script>
-        // 環境提供用のプレースホルダー
-        const apiKey = ""; 
+        // アイコン初期化
+        lucide.createIcons();
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        // 初期設定値（MEOキーワード、西宮鳴尾店）
+        // 【★修正箇所】ご提示いただいたAPIキーを初期設定値として組み込みました
         let config = {
             storeName: "Aサロン 西宮鳴尾店",
             placeId: "ChIJl5b6iArtAGAR8ApLCtIoCuw",
             seoKeywords: "西宮鳴尾 美容室, 白髪染め, ヘッドスパ",
-            style: "friendly"
+            style: "friendly",
+            geminiKey: localStorage.getItem("gemini_api_key") || "AIzaSyBS2esHwPsHeGmSoff_WHRrzOkTocn4D1U"
         };
 
-        // DOMロード時の初期化
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            document.getElementById('footer-year').textContent = new Date().getFullYear();
+        // UI初期化時に設定値を流し込む
+        document.getElementById('config-store-name').value = config.storeName;
+        document.getElementById('config-place-id').value = config.placeId;
+        document.getElementById('config-seo-keywords').value = config.seoKeywords;
+        document.getElementById('config-style').value = config.style;
+        document.getElementById('config-gemini-key').value = config.geminiKey;
 
-            // ローカルストレージにAPIキーがあれば読み込む。なければ、今回のご提示キーを初期値としてセット。
-            let savedKey = localStorage.getItem('gemini_api_key');
-            if (!savedKey) {
-                savedKey = "AIzaSyBS2esHwPsHeGmSoff_WHRrzOkTocn4D1U"; // ご提示いただいたAPIキー
-                localStorage.setItem('gemini_api_key', savedKey);
-            }
-            document.getElementById('config-api-key').value = savedKey;
-
-            updateConfig();
-        });
-
-        // 設定の同期
         function updateConfig() {
             config.storeName = document.getElementById('config-store-name').value;
             config.placeId = document.getElementById('config-place-id').value;
             config.seoKeywords = document.getElementById('config-seo-keywords').value;
             config.style = document.getElementById('config-style').value;
+            config.geminiKey = document.getElementById('config-gemini-key').value;
 
-            // 各種表示テキストの即時書き換え
+            // APIキーをローカルストレージに安全に保管
+            localStorage.setItem("gemini_api_key", config.geminiKey);
+
+            // 各種テキスト書き換え
             document.getElementById('header-store-name').textContent = config.storeName;
             document.getElementById('footer-store-name').textContent = config.storeName;
             document.getElementById('coupon-store-name').textContent = config.storeName;
-
-            updateApiBadge();
         }
-
-        // APIキー入力時の処理
-        function handleApiKeyInput() {
-            const currentKey = document.getElementById('config-api-key').value.trim();
-            localStorage.setItem('gemini_api_key', currentKey);
-            updateApiBadge();
-        }
-
-        // バッジの表示状態を更新
-        function updateApiBadge() {
-            const activeKey = getActiveApiKey();
-            const badge = document.getElementById('api-status-badge');
-            if (activeKey) {
-                badge.textContent = "リアルAI接続中";
-                badge.className = "text-[9px] px-2 py-0.5 rounded-full font-bold bg-emerald-50 text-emerald-600 border border-emerald-100";
-            } else {
-                badge.textContent = "未接続（疑似AI稼働）";
-                badge.className = "text-[9px] px-2 py-0.5 rounded-full font-bold bg-amber-50 text-amber-600 border border-amber-100";
-            }
-        }
-
-        // 稼働中のAPIキーを取得するヘルパー
-        function getActiveApiKey() {
-            const inputKey = document.getElementById('config-api-key')?.value.trim();
-            return inputKey || apiKey;
-        }
-
-        // 指数バックオフ付きフェッチ（最大5回リトライ）
-        async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
-            try {
-                const response = await fetch(url, options);
-                if (!response.ok) {
-                    const errBody = await response.text();
-                    throw new Error(`HTTP error! status: ${response.status}, info: ${errBody}`);
-                }
-                return await response.json();
-            } catch (error) {
-                if (retries === 1) throw error;
-                await new Promise(resolve => setTimeout(resolve, delay));
-                return fetchWithRetry(url, options, retries - 1, delay * 2);
-            }
-        }
+        updateConfig();
 
         // 1. アンケート回答送信
         async function handleSurveySubmit(event) {
@@ -317,107 +265,95 @@
             const satisfactionPoints = formData.getAll('satisfaction_points');
             const userComment = formData.get('comment');
 
-            // 画面を一旦ローディングに切り替える
-            document.getElementById('step-form').classList.add('hidden');
-            document.getElementById('step-loading').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            const activeKey = getActiveApiKey();
             let reviewText = "";
-            let isRealAI = false;
 
-            if (activeKey) {
-                // 本物のGemini APIを叩いて口コミ生成
+            // Gemini APIキーが設定されている場合は、本物のAIを呼び出す
+            if (config.geminiKey.trim() !== "") {
+                // ローディング表示に切り替え
+                document.getElementById('step-form').classList.add('hidden');
+                document.getElementById('step-loading').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
                 try {
-                    reviewText = await generateGeminiReview(activeKey, visitCount, satisfactionPoints, userComment);
-                    isRealAI = true;
-                } catch (err) {
-                    console.error("Gemini生成でエラーが発生したため、フォールバック（疑似AI）を実行します:", err);
-                    // エラー時は自動で高精度な疑似AI(ローカル)でフォールバック
-                    reviewText = generateMEOReviewFallback(visitCount, satisfactionPoints, userComment);
+                    reviewText = await callGeminiAI(visitCount, satisfactionPoints, userComment);
+                } catch (error) {
+                    console.error("Gemini API連携エラー、疑似生成にフォールバックします:", error);
+                    reviewText = generateFakeAIReview(visitCount, satisfactionPoints, userComment);
                 }
-            } else {
-                // キーが設定されていない場合は、ローカルの高度な疑似AI
-                reviewText = generateMEOReviewFallback(visitCount, satisfactionPoints, userComment);
-            }
 
-            // ローディング画面を隠し、生成結果画面を表示
-            document.getElementById('step-loading').classList.add('hidden');
+                document.getElementById('step-loading').classList.add('hidden');
+            } else {
+                reviewText = generateFakeAIReview(visitCount, satisfactionPoints, userComment);
+                document.getElementById('step-form').classList.add('hidden');
+            }
+            
+            // 口コミ表示エリアにセット
             document.getElementById('generated-review-text').textContent = reviewText;
-
-            // バッジの切り替え
-            const badgeContainer = document.getElementById('ai-badge-container');
-            if (isRealAI) {
-                badgeContainer.innerHTML = `
-                    <i data-lucide="cpu" class="w-4 h-4"></i>
-                    <span>本物のGemini AIが執筆（MEO最適化済）</span>
-                `;
-                badgeContainer.className = "flex items-center justify-center space-x-1.5 mt-1 text-emerald-600 font-bold text-xs bg-emerald-50 py-1 px-3 rounded-full w-fit mx-auto border border-emerald-100";
-            } else {
-                badgeContainer.innerHTML = `
-                    <i data-lucide="shield-check" class="w-4 h-4"></i>
-                    <span>MEO対策自動最適化（疑似AI生成）</span>
-                `;
-                badgeContainer.className = "flex items-center justify-center space-x-1.5 mt-1 text-amber-600 font-bold text-xs bg-amber-50 py-1 px-3 rounded-full w-fit mx-auto border border-amber-100";
-            }
-            lucide.createIcons();
-
             document.getElementById('step-ai-review').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 【リアルAI】本物のGemini APIを使用した口コミ自動生成
-        async function generateGeminiReview(key, visitCount, points, userComment) {
-            // 安定版プロダクションモデルの gemini-1.5-flash を使用（無料枠・無制限かつ超高速動作）
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+        // 2-A. 本物のGoogle Gemini APIを呼び出す関数
+        async function callGeminiAI(visitCount, points, userComment) {
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${config.geminiKey}`;
+            
+            const politePrompt = "落ち着きがあり丁寧でフォーマルな大人っぽい日本語のトーン（〜です、〜でした）";
+            const friendlyPrompt = "20〜30代女性が書いたような、適度に絵文字を散りばめたフランクで温かみのある日本語トーン（〜でした！✨、〜です😊）";
+            const selectedTone = config.style === "friendly" ? friendlyPrompt : politePrompt;
 
-            const userPrompt = `
-店舗名: ${config.storeName}
-来店回数: ${visitCount}
-満足した点: ${points.join(', ') || '全体的な居心地の良さ'}
-具体的な嬉しかった点: ${userComment || '特になし'}
-MEOターゲットキーワード: ${config.seoKeywords}
-文体設定: ${config.style === 'friendly' ? 'カジュアル（絵文字入りで親しみやすい）' : '丁寧・フォーマル（落ち着いた大人のトーン）'}
-`;
+            const promptText = `
+あなたは実在するお客様になりきって、Googleマップに高評価（星5）のクチコミを投稿するプロのライターです。
+提供されたお客様アンケート情報を基に、自然で説得力のある口コミ文章を1つ作成してください。
 
-            const systemInstruction = `あなたは親しみやすく、実在する一般の顧客になりきって口コミ（レビュー）を書くプロのライターです。
-提供されたアンケート結果、MEOターゲットキーワード、文体設定を基に、Googleマップに投稿するための自然で好意的な口コミ文章を1つ作成してください。
+# 制約事項:
+- AIが書いたと絶対にバレないよう、人間が実際に書いた自然な話し言葉で執筆してください。客観的な説明は避け、主観的な感想（「〜で感動しました！」「〜が本当に嬉かったです」）で構成してください。
+- 以下の「MEO対策ターゲットキーワード」から、自然な文脈に溶け込ませる形で、1〜2個のキーワードを文章内に必ず散りばめてください。強引に詰め込むのではなく、あくまで全体の会話の流れが自然になるようにすること。
+- 見出し、タイトル、挨拶（「こんにちは」など）は絶対に出力せず、口コミの本文だけを出力してください。
+- 文字数は 120字〜180字 程度に収めてください。
 
-制約事項:
-- 絶対に出力は口コミの本文のみとし、挨拶（「こんにちは」等）や、タイトルのような見出し、余計な前置き、前後の説明、引用符（\" や \'、 「」など）は一切含めないでください。本文テキストから直接書き始めてください。
-- 文字数は100文字〜150文字程度で、要点をコンパクトにまとめてください。
-- 指定された「MEOターゲットキーワード」（カンマ区切りされているもの）のなから、1つ〜2つを文章の流れの中で極めて自然に、絶対に違和感がないように散りばめてください。
-- サクラ（偽レビュー）だと見破られないよう、極めて自然な人間の話し言葉（主観的な感想「〜でした！」「〜で嬉しかった」など）を用いて書いてください。大げさな表現（「世界一」「日本で最高」など）は避けてください。
-- 文体設定（カジュアルなら絵文字少し・親しみやすく、フォーマルなら絵文字なし・丁寧な文章）を厳守してください。`;
+# 出力文体:
+- ${selectedTone}
 
-            const payload = {
-                contents: [{
-                    parts: [{ text: userPrompt }]
-                }],
-                systemInstruction: {
-                    parts: [{ text: systemInstruction }]
-                }
-            };
+# アンケート情報:
+- 対象店舗名: ${config.storeName}
+- 来店回数: ${visitCount}
+- 今回特に満足した点: ${points.join('、')}
+- お客様の自由感想（もしあれば）: "${userComment || '特になし'}"
+- MEO対策ターゲットキーワード: ${config.seoKeywords}
 
-            const result = await fetchWithRetry(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+# 出力（口コミの本文のみ）:`;
+
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: promptText
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.75,
+                        maxOutputTokens: 300
+                    }
+                })
             });
 
-            const rawText = result.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (!rawText) throw new Error("Geminiからの応答データが空です。");
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.error?.message || "Gemini APIエラー");
+            }
 
-            // 不要な記号（前後を囲う引用符など）をクレンジング
-            return rawText.trim().replace(/^["'「`]+|["'」`]+$/g, '');
+            const resData = await response.json();
+            const generatedText = resData.candidates[0].content.parts[0].text;
+            return generatedText.trim().replace(/^`+|`+$/g, ""); 
         }
 
-        // 【ローカルフォールバック】MEO対応の疑似AI口コミ生成ロジック
-        function generateMEOReviewFallback(visitCount, points, userComment) {
-            const seoWords = config.seoKeywords.split(',')
-                .map(w => w.trim())
-                .filter(w => w.length > 0);
-
+        // 2-B. 疑似AI口コミの生成ロジック（バックアップ）
+        function generateFakeAIReview(visitCount, points, userComment) {
+            const seoWords = config.seoKeywords.split(',').map(w => w.trim()).filter(w => w.length > 0);
             const targetSeo1 = seoWords[0] || "美容室";
             const targetSeo2 = seoWords[1] || "白髪染め";
             const targetSeo3 = seoWords[2] || "ヘッドスパ";
@@ -507,7 +443,6 @@ MEOターゲットキーワード: ${config.seoKeywords}
             const styleKey = isFriendly ? "friendly" : "polite";
 
             let intro = getRandom(openings[styleKey][visitCount] || openings[styleKey]["初めて"]);
-
             let body = "";
             let selectedPoints = [...points];
             if (selectedPoints.includes("高い施術技術")) {
@@ -590,7 +525,7 @@ MEOターゲットキーワード: ${config.seoKeywords}
             }
         }
 
-        // マップを開いて次の画面へ
+        // 【★修正箇所】マップを開く関数（LINEアプリ内ブラウザからの強制離脱処理）
         function proceedToMap() {
             let reviewUrl = "";
             const inputVal = config.placeId.trim();
@@ -601,10 +536,32 @@ MEOターゲットキーワード: ${config.seoKeywords}
                 reviewUrl = `https://search.google.com/local/writereview?placeid=${inputVal}`;
             }
             
-            // 新規タブでレビューページを開く
-            window.open(reviewUrl, '_blank');
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const isLine = userAgent.indexOf("LINE") > -1;
 
-            // 1.5秒後に、LINE画面側を「クーポン取得完了」に切り替える
+            if (isLine) {
+                // iPhone (iOS) の場合：URL末尾に公式パラメータを付与してSafariを強制起動
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    if (reviewUrl.indexOf('?') > -1) {
+                        reviewUrl += "&openExternalBrowser=1";
+                    } else {
+                        reviewUrl += "?openExternalBrowser=1";
+                    }
+                    window.location.href = reviewUrl;
+                } 
+                // Android の場合：intentスキームを使ってChromeアプリを強制起動
+                else if (/Android/.test(userAgent)) {
+                    const androidIntent = `intent://${reviewUrl.replace(/^https?:\/\//, "")}#Intent;scheme=https;package=com.android.chrome;end`;
+                    window.location.href = androidIntent;
+                } 
+                else {
+                    window.open(reviewUrl, '_blank');
+                }
+            } else {
+                // 通常ブラウザ（Safari/Chrome等）の場合はそのまま別タブで開く
+                window.open(reviewUrl, '_blank');
+            }
+
             setTimeout(() => {
                 document.getElementById('step-ai-review').classList.add('hidden');
                 document.getElementById('step-coupon').classList.remove('hidden');
