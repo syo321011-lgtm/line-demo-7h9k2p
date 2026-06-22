@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 他の人（検索エンジン）に見つからないようにするための設定 (検索除外) -->
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    
+    <title>アンケート & 特典クーポン</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- ヘッダー -->
+    <header class="bg-emerald-600 text-white py-4 px-6 shadow-md text-center sticky top-0 z-10">
+        <h1 id="header-store-name" class="font-bold text-lg">テスト店舗</h1>
+        <p class="text-xs text-emerald-100 mt-0.5">アンケート回答で500円OFFクーポンプレゼント</p>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-grow p-4 max-w-md mx-auto w-full">
+
+        <!-- 【設定パネル】テスト用にプレイスIDや店舗名を変えられるようにする（本番時は非表示にできます） -->
+        <details class="mb-4 bg-white rounded-xl shadow-sm border border-slate-200 p-3 text-xs">
+            <summary class="font-semibold text-slate-500 cursor-pointer focus:outline-none">🛠️ テスト設定（ここをクリックして編集）</summary>
+            <div class="mt-3 space-y-2 pt-2 border-t border-slate-100">
+                <div>
+                    <label class="block font-bold text-slate-600 mb-1">店舗名</label>
+                    <input type="text" id="config-store-name" class="w-full border rounded p-1" value="テストサロン 渋谷店" oninput="updateConfig()">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-600 mb-1">Google Place ID</label>
+                    <input type="text" id="config-place-id" class="w-full border rounded p-1" value="ChIJ2eUgeAKLGGARm9m9L1DZ98A" oninput="updateConfig()">
+                    <p class="text-[10px] text-slate-400 mt-1">※プレイスIDを入力すると、実際のGoogle口コミ画面に遷移します。</p>
+                </div>
+            </div>
+        </details>
+
+        <!-- ステップ1: アンケートフォーム -->
+        <div id="step-form" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-6">
+            <div class="text-center">
+                <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full">簡単1分</span>
+                <h2 class="text-xl font-bold mt-2">ご来店アンケート</h2>
+                <p class="text-xs text-slate-400 mt-1">本日のご感想をお聞かせください</p>
+            </div>
+
+            <form id="survey-form" onsubmit="handleSurveySubmit(event)" class="space-y-5">
+                <!-- 質問1: 来店回数 -->
+                <div>
+                    <label class="block font-semibold text-sm mb-2 text-slate-700">1. 本日のご来店は？ <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="border rounded-xl p-3 text-center cursor-pointer transition hover:bg-slate-50 block">
+                            <input type="radio" name="visit_count" value="初めて" required class="sr-only peer">
+                            <span class="text-sm font-medium peer-checked:text-emerald-600 block rounded-lg py-1 border border-transparent peer-checked:border-emerald-500 peer-checked:bg-emerald-50">初めて</span>
+                        </label>
+                        <label class="border rounded-xl p-3 text-center cursor-pointer transition hover:bg-slate-50 block">
+                            <input type="radio" name="visit_count" value="2回目以上" class="sr-only peer">
+                            <span class="text-sm font-medium peer-checked:text-emerald-600 block rounded-lg py-1 border border-transparent peer-checked:border-emerald-500 peer-checked:bg-emerald-50">2回目以上</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 質問2: 満足した点（複数可） -->
+                <div>
+                    <label class="block font-semibold text-sm mb-2 text-slate-700">2. 本日、特に満足した点は？ <span class="text-red-500">*</span></label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="border rounded-xl p-3 flex items-center space-x-2 cursor-pointer transition hover:bg-slate-50">
+                            <input type="checkbox" name="satisfaction_points" value="丁寧な接客" class="rounded text-emerald-600 focus:ring-emerald-500">
+                            <span class="text-xs font-medium text-slate-600">丁寧な接客</span>
+                        </label>
+                        <label class="border rounded-xl p-3 flex items-center space-x-2 cursor-pointer transition hover:bg-slate-50">
+                            <input type="checkbox" name="satisfaction_points" value="店内の清潔感" class="rounded text-emerald-600 focus:ring-emerald-500">
+                            <span class="text-xs font-medium text-slate-600">店内の清潔感</span>
+                        </label>
+                        <label class="border rounded-xl p-3 flex items-center space-x-2 cursor-pointer transition hover:bg-slate-50">
+                            <input type="checkbox" name="satisfaction_points" value="高い施術技術" class="rounded text-emerald-600 focus:ring-emerald-500">
+                            <span class="text-xs font-medium text-slate-600">高い施術技術</span>
+                        </label>
+                        <label class="border rounded-xl p-3 flex items-center space-x-2 cursor-pointer transition hover:bg-slate-50">
+                            <input type="checkbox" name="satisfaction_points" value="待ち時間の少なさ" class="rounded text-emerald-600 focus:ring-emerald-500">
+                            <span class="text-xs font-medium text-slate-600">待ち時間の少なさ</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 質問3: 自由記述 -->
+                <div>
+                    <label class="block font-semibold text-sm mb-1 text-slate-700">3. 具体的な嬉しかった点（任意）</label>
+                    <p class="text-[11px] text-slate-400 mb-2">※一言あると、より具体的な口コミを自動生成できます</p>
+                    <textarea name="comment" rows="3" class="w-full border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="例：肩こりが軽くなった、カウンセリングが丁寧だった、など"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition flex items-center justify-center space-x-2">
+                    <span>回答を送信して特典を受け取る</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- ステップ2: AI口コミ生成 ➔ コピー ➔ Googleマップ動線 -->
+        <div id="step-ai-review" class="hidden bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-6">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center bg-amber-50 text-amber-600 p-3 rounded-full mb-3">
+                    <i data-lucide="sparkles" class="w-8 h-8 animate-pulse"></i>
+                </div>
+                <h2 class="text-xl font-bold">AIが口コミを生成しました！</h2>
+                <p class="text-xs text-slate-500 mt-1">アンケートから作成した自然なレビュー文章です</p>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-4 border border-dashed border-slate-200 relative">
+                <span class="absolute -top-2.5 left-4 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">AI生成下書き</span>
+                <p id="generated-review-text" class="text-sm leading-relaxed text-slate-700 pt-1">
+                    （ここに口コミが生成されます）
+                </p>
+            </div>
+
+            <div class="bg-amber-50 border border-amber-100 rounded-xl p-3.5 space-y-1.5">
+                <h3 class="font-bold text-xs text-amber-800 flex items-center">
+                    <i data-lucide="info" class="w-4 h-4 mr-1"></i> 投稿カンタン3ステップ
+                </h3>
+                <ol class="text-[11px] text-amber-700 list-decimal pl-4 space-y-1">
+                    <li>下の緑色のボタンを押すと、文章が自動でコピーされます</li>
+                    <li>Googleマップのレビュー画面が開きます</li>
+                    <li>枠内を長押しして「ペースト（貼り付け）」し、星5を選んで投稿！</li>
+                </ol>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="copyAndRedirect()" class="w-full bg-emerald-600 text-white font-bold py-4 px-4 rounded-xl shadow-lg shadow-emerald-600/20 hover:bg-emerald-700 transition flex items-center justify-center space-x-2 text-base">
+                    <i data-lucide="copy" class="w-5 h-5"></i>
+                    <span>コピーしてGoogleマップに投稿</span>
+                </button>
+                <button onclick="skipToCoupon()" class="w-full text-slate-400 text-xs py-2 hover:text-slate-600 transition">
+                    投稿せずにクーポンを受け取る
+                </button>
+            </div>
+        </div>
+
+        <!-- ステップ3: クーポン画面 -->
+        <div id="step-coupon" class="hidden space-y-6">
+            <!-- サンクスメッセージ -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 text-center">
+                <div class="inline-flex items-center justify-center bg-emerald-50 text-emerald-600 p-3 rounded-full mb-3">
+                    <i data-lucide="check-circle" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-xl font-bold">ご協力ありがとうございました！</h2>
+                <p class="text-xs text-slate-500 mt-1">お礼として500円OFFクーポンをプレゼントいたします。</p>
+            </div>
+
+            <!-- クーポンカード -->
+            <div class="bg-gradient-to-br from-amber-400 to-orange-500 text-white rounded-2xl shadow-xl overflow-hidden relative border-4 border-white">
+                <!-- 装飾用半円（ちぎり券風） -->
+                <div class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50 rounded-full"></div>
+                <div class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-slate-50 rounded-full"></div>
+                
+                <div class="p-6 text-center space-y-3 border-b border-dashed border-white/30">
+                    <span id="coupon-store-name" class="text-xs font-bold tracking-wider bg-white/20 px-3 py-1 rounded-full uppercase">テスト店舗</span>
+                    <h3 class="text-4xl font-extrabold tracking-tight pt-2">500円 OFF</h3>
+                    <p class="text-xs text-amber-50 opacity-90">次回ご来店時の会計時にご利用いただけます</p>
+                </div>
+                
+                <div class="p-4 bg-black/10 text-center space-y-3">
+                    <p class="text-[10px] text-amber-100">お会計時に店舗スタッフにこの画面をご提示ください</p>
+                    <div id="coupon-action-area">
+                        <button onclick="useCoupon()" class="w-full bg-white text-orange-600 font-bold py-2.5 px-4 rounded-xl text-sm shadow hover:bg-amber-50 transition">
+                            スタッフが確認して使用する
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="resetDemo()" class="text-xs text-slate-400 hover:text-slate-600 underline">
+                    テストを最初からやり直す
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-slate-100 border-t border-slate-200 py-4 text-center text-[10px] text-slate-400">
+        &copy; <span id="footer-year">2026</span> <span id="footer-store-name">テスト店舗</span>. All Rights Reserved.
+    </footer>
+
+    <!-- スクリプト -->
+    <script>
+        // アイコン初期化
+        lucide.createIcons();
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        // テスト用設定の初期化
+        let config = {
+            storeName: "テストサロン 渋谷店",
+            placeId: "ChIJ2eUgeAKLGGARm9m9L1DZ98A" // 仮のプレイスID（Google日本オフィス）
+        };
+
+        function updateConfig() {
+            config.storeName = document.getElementById('config-store-name').value;
+            config.placeId = document.getElementById('config-place-id').value;
+
+            // 各種テキスト書き換え
+            document.getElementById('header-store-name').textContent = config.storeName;
+            document.getElementById('footer-store-name').textContent = config.storeName;
+            document.getElementById('coupon-store-name').textContent = config.storeName;
+        }
+        updateConfig();
+
+        // 1. アンケート回答送信
+        function handleSurveySubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const visitCount = formData.get('visit_count');
+            const satisfactionPoints = formData.getAll('satisfaction_points');
+            const userComment = formData.get('comment');
+
+            // 擬似的なAI口コミ生成処理 (JavaScriptロジックで自然な文章を作る)
+            const reviewText = generateFakeAIReview(visitCount, satisfactionPoints, userComment);
+            
+            // 口コミ表示エリアにセット
+            document.getElementById('generated-review-text').textContent = reviewText;
+
+            // 画面遷移
+            document.getElementById('step-form').classList.add('hidden');
+            document.getElementById('step-ai-review').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2. 擬似AI口コミの生成ロジック
+        function generateFakeAIReview(visitCount, points, userComment) {
+            // パターンバリエーション
+            const openings = {
+                "初めて": [
+                    `初めてこちらの店舗に伺いました！`,
+                    `ずっと気になっていて、今日初めて利用させていただしました。`,
+                    `新規で初めてお邪魔しました。`
+                ],
+                "2回目以上": [
+                    `いつもお世話になっているお気に入りのお店です！`,
+                    `何度かリピートさせていただいています。`,
+                    `定期的にお願いしています。毎回大満足です。`
+                ]
+            };
+
+            const pointTexts = {
+                "丁寧な接客": [
+                    `スタッフのみなさんがとにかく親切で、丁寧に対応してくださいました。`,
+                    `スタッフの方の対応がとても温かく、初めてでもリラックスして過ごせました。`,
+                    `接客が細やかで、こちらの要望もしっかり聞いていただけます。`
+                ],
+                "店内の清潔感": [
+                    `店内はとても綺麗で、落ち着きのある洗練された素晴らしい空間でした。`,
+                    `清潔感が漂う綺麗なサロンで、居心地が本当に良かったです。`,
+                    `隅々まで清掃が行き届いていて、快適に利用できました。`
+                ],
+                "高い施術技術": [
+                    `技術力が本当に高く、期待以上の仕上がりにしていただけて大満足です！`,
+                    `いつも安心してお任せできる確かな技術力があります。素晴らしいです。`,
+                    `クオリティが高く、自分に一番似合う形で仕上げてくださいました。`
+                ],
+                "待ち時間の少なさ": [
+                    `予約通りにスムーズに案内していただけて、無駄な時間が全くありませんでした。`,
+                    `待ち時間なく案内してもらえるので、忙しい日でも通いやすいです。`,
+                    `スタッフの方の連携がよく、手際が良いので安心してお任せできます。`
+                ]
+            };
+
+            const endings = [
+                `ぜひまた利用したいと思います！おすすめのお店です。`,
+                `周りの友人にも紹介したいと思える場所でした。`,
+                `いつも本当にありがとうございます。また次回もよろしくお願いします！`,
+                `これから通い続けたいと思います！`
+            ];
+
+            // ランダム選択用ヘルパー
+            const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+            // 1. 冒頭
+            let intro = getRandom(openings[visitCount] || openings["初めて"]);
+
+            // 2. 特徴ポイント（選択された中から最大2つを合成）
+            let body = "";
+            if (points.length > 0) {
+                const selectedPoints = points.slice(0, 2);
+                body = selectedPoints.map(p => getRandom(pointTexts[p])).join(" ");
+            } else {
+                body = "全体的に非常にクオリティが高く、とても充実した時間を過ごすことができました。";
+            }
+
+            // 3. ユーザーの自由記述を自然にドッキング
+            let customText = "";
+            if (userComment && userComment.trim() !== "") {
+                const cleanedComment = userComment.trim().replace(/[。！!]/g, "");
+                customText = `特に「${cleanedComment}」という点がとても嬉しかったです。`;
+            }
+
+            // 4. 結び
+            let outro = getRandom(endings);
+
+            // 合体
+            return `${intro}\n${body}\n${customText}\n${outro}`.trim();
+        }
+
+        // 3. コピーしてGoogleマップへ遷移
+        function copyAndRedirect() {
+            const reviewText = document.getElementById('generated-review-text').textContent.trim();
+
+            // クリップボードにコピー
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(reviewText)
+                    .then(() => {
+                        proceedToMap();
+                    })
+                    .catch(err => {
+                        console.error('コピー失敗:', err);
+                        fallbackCopy(reviewText);
+                    });
+            } else {
+                fallbackCopy(reviewText);
+            }
+        }
+
+        // コピーの代替手段（古いiOS/LINEブラウザ対策）
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";  // 画面外に配置
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                proceedToMap();
+            } catch (err) {
+                alert("申し訳ありません、文章の自動コピーに失敗しました。お手数ですが、枠内のテキストをコピーしてGoogleマップへ貼り付けてください。");
+                proceedToMap();
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // マップを開いて次の画面へ
+        function proceedToMap() {
+            // Googleレビュー書き込み用URL（Place IDを設定）
+            const reviewUrl = `https://search.google.com/local/writereview?placeid=${config.placeId}`;
+            
+            // 新規タブでレビューページを開く
+            window.open(reviewUrl, '_blank');
+
+            // 1.5秒後に、LINE画面側を「クーポン取得完了」に切り替える
+            setTimeout(() => {
+                document.getElementById('step-ai-review').classList.add('hidden');
+                document.getElementById('step-coupon').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1500);
+        }
+
+        // 投稿をスキップしてクーポンへ
+        function skipToCoupon() {
+            document.getElementById('step-ai-review').classList.add('hidden');
+            document.getElementById('step-coupon').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // クーポン使用処理
+        function useCoupon() {
+            if (confirm("スタッフ確認：クーポンを使用済みにしますか？（一度使うと戻せません）")) {
+                document.getElementById('coupon-action-area').innerHTML = `
+                    <div class="bg-gray-800/40 text-gray-200 font-bold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center space-x-1.5">
+                        <i data-lucide="lock" class="w-4 h-4"></i>
+                        <span>使用済み（消し込み完了）</span>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
+        }
+
+        // デモのリセット
+        function resetDemo() {
+            document.getElementById('survey-form').reset();
+            document.getElementById('step-coupon').classList.add('hidden');
+            document.getElementById('step-form').classList.remove('hidden');
+            
+            // クーポンアクションエリアを復元
+            document.getElementById('coupon-action-area').innerHTML = `
+                <button onclick="useCoupon()" class="w-full bg-white text-orange-600 font-bold py-2.5 px-4 rounded-xl text-sm shadow hover:bg-amber-50 transition">
+                    スタッフが確認して使用する
+                </button>
+            `;
+            lucide.createIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
